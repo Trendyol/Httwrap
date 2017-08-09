@@ -42,7 +42,7 @@ namespace Httwrap.Tests
         private async Task ClearApiCache()
         {
             var clearResponse = await _client.GetAsync("api/products?op=clear");
-            clearResponse.StatusCode.Should().Be(HttpStatusCode.NoContent);
+            clearResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Test]
