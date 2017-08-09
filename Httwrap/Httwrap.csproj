@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Auth\AnonymousCredentials.cs" />
     <Compile Include="Auth\BasicAuthCredentials.cs" />
+    <Compile Include="Auth\OAuth2ClientCredentials.cs" />
     <Compile Include="Auth\OAuthCredentials.cs" />
     <Compile Include="Auth\Token.cs" />
     <Compile Include="Check.cs" />
@@ -56,7 +57,9 @@
     <Compile Include="HttwrapConfiguration.cs" />
     <Compile Include="HttwrapException.cs" />
     <Compile Include="HttwrapResponse.cs" />
+    <Compile Include="Interception\BasicAuthInterceptor.cs" />
     <Compile Include="Interception\IHttpInterceptor.cs" />
+    <Compile Include="Interception\OAuth2ClientCredentialsInterceptor.cs" />
     <Compile Include="Interface\IHttwrapResponse.cs" />
     <Compile Include="Interface\IHttwrapClient.cs" />
     <Compile Include="Interface\IHttwrapConfiguration.cs" />

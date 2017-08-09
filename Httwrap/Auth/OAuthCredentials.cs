@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Httwrap.Interception;
 
 namespace Httwrap.Auth
 {
+    [Obsolete]
     public class OAuthCredentials : Credentials
     {
         private readonly string _grantType;
@@ -52,6 +55,11 @@ namespace Httwrap.Auth
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
             return httpClient;
+        }
+
+        public override IHttpInterceptor GetInterceptor()
+        {
+            return null;
         }
 
         public override bool IsTlsCredentials()

@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using Httwrap.Auth;
+using Httwrap.Interception;
 
 namespace Httwrap.Interface
 {
@@ -9,5 +11,6 @@ namespace Httwrap.Interface
         ISerializer Serializer { get; }
         Credentials Credentials { get; set; }
         HttpClient GetHttpClient();
+        List<IHttpInterceptor> GetInterceptors();
     }
 }

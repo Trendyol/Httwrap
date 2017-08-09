@@ -46,19 +46,6 @@ namespace Httwrap.Tests
         }
 
         [Test]
-        public void BasicCredentials_should_set_auth_header_Test()
-        {
-            var credentials = new BasicAuthCredentials("user", "s3cr3t");
-            var client = credentials.BuildHttpClient();
-            client.DefaultRequestHeaders.Should().NotBeNullOrEmpty();
-
-            var authHeader = client.DefaultRequestHeaders.FirstOrDefault(pair => pair.Key == "Authorization");
-
-            authHeader.Should().NotBeNull();
-            authHeader.Value.First().Should().Contain("Basic");
-        }
-
-        [Test]
         public async void Delete_test()
         {
             var product = FixtureRepository.Build<Product>().Without(p => p.Id).Create();
