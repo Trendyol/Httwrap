@@ -1,7 +1,5 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
+﻿using System.Net.Http;
+using Httwrap.Interception;
 
 namespace Httwrap.Auth
 {
@@ -24,13 +22,13 @@ namespace Httwrap.Auth
         public override HttpClient BuildHttpClient(HttpMessageHandler httpHandler = null)
         {
             var httpClient = httpHandler != null ? new HttpClient(httpHandler) : new HttpClient();
-
-            var authString =
-                Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Format("{0}:{1}", _username, _password)));
-
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authString);
-
             return httpClient;
+        }
+
+        public override IHttpInterceptor GetInterceptor()
+        {
+            var interceptor = new BasicAuthInterceptor(_username, _password);
+            return interceptor;
         }
 
         public override bool IsTlsCredentials()

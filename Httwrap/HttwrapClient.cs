@@ -37,7 +37,7 @@ namespace Httwrap
             _configuration = configuration;
             _queryStringBuilder = queryStringBuilder;
             _httpClient = _configuration.GetHttpClient();
-            _interceptors = new List<IHttpInterceptor>();
+            _interceptors = _configuration.GetInterceptors();
         }
 
         public void Dispose()
@@ -51,7 +51,6 @@ namespace Httwrap
             return await RequestAsync(HttpMethod.Get, path, null, errorHandler, customHeaders);
         }
 
-      
         public async Task<IHttwrapResponse> GetAsync(string path, object payload,
             Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null)
         {
