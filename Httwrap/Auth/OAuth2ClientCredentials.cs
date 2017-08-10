@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using Httwrap.Interception;
 
 namespace Httwrap.Auth
@@ -8,15 +9,19 @@ namespace Httwrap.Auth
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly string _tokenEndpoint;
+        private readonly List<string> _scopes;
 
-        public OAuth2ClientCredentials(string clientId, string clientSecret, string tokenEndpoint)
+        public OAuth2ClientCredentials(string clientId, string clientSecret, string tokenEndpoint, List<string> scopes)
         {
             Check.NotNullOrEmpty(clientId, "clientId");
             Check.NotNullOrEmpty(clientSecret, "clientSecret");
             Check.NotNullOrEmpty(tokenEndpoint, "tokenEndpoint");
+            Check.NotNull(scopes, "scopes");
+            Check.NotZeroLength(scopes, "scopes");
             _clientId = clientId;
             _clientSecret = clientSecret;
             _tokenEndpoint = tokenEndpoint;
+            _scopes = scopes;
         }
 
         public override HttpClient BuildHttpClient(HttpMessageHandler httpHandler = null)
@@ -27,7 +32,7 @@ namespace Httwrap.Auth
 
         public override IHttpInterceptor GetInterceptor()
         {
-            var interceptor = new OAuth2ClientCredentialsInterceptor(_clientId, _clientSecret, _tokenEndpoint);
+            var interceptor = new OAuth2ClientCredentialsInterceptor(_clientId, _clientSecret, _tokenEndpoint, _scopes);
             return interceptor;
         }
 

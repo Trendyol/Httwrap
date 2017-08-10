@@ -21,8 +21,7 @@ namespace Httwrap.Interception
         private Token _token;
         private bool _isTokenExpired = true;
 
-        public OAuth2ClientCredentialsInterceptor(string clientId, string clientSecret, string tokenEndpoint,
-            List<string> scopes = null)
+        public OAuth2ClientCredentialsInterceptor(string clientId, string clientSecret, string tokenEndpoint, List<string> scopes)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
