@@ -71,7 +71,7 @@ namespace Httwrap.Interception
                             {"scope", _scope}
                         });
 
-                        string additionalInfo = String.Empty;
+                        string additionalInfo;
 
                         try
                         {
@@ -83,6 +83,10 @@ namespace Httwrap.Interception
                                 _token = new HttwrapResponse(tokenResponse).ReadAs<Token>();
                                 _isTokenExpired = false;
                                 return;
+                            }
+                            else
+                            {
+                                additionalInfo = tokenResponse?.Content?.ToString();
                             }
                         }
                         catch (Exception ex)
