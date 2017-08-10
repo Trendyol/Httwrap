@@ -147,19 +147,6 @@ namespace Httwrap
             return new HttwrapResponse(response.StatusCode, content);
         }
 
-        private IHttwrapResponse Request<T>(HttpMethod method, string path, object body,
-          Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            var response = RequestImpl(requestTimeout, HttpCompletionOption.ResponseHeadersRead, CancellationToken.None, method,
-                        path, body, customHeaders);
-
-            var content = response.Content.ReadAsStringAsync().Result;
-
-            HandleIfErrorResponse(response.StatusCode, content, errorHandler);
-
-            return new HttwrapResponse(response.StatusCode, content);
-        }
-
         private async Task<IHttwrapResponse> RequestAsync(HttpMethod method, string path, object body,
             Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null , TimeSpan? requestTimeout = null)
         {
@@ -209,14 +196,14 @@ namespace Httwrap
 
                 foreach (IHttpInterceptor interceptor in _interceptors)
                 {
-                    interceptor.OnRequest(request);
+                    interceptor.OnRequest(_httpClient, request, completionOption, cancellationToken);
                 }
 
                 HttpResponseMessage response = _httpClient.SendAsync(request, completionOption, cancellationToken).Result;
 
                 foreach (IHttpInterceptor interceptor in _interceptors)
                 {
-                    interceptor.OnResponse(request, response);
+                    interceptor.OnResponse(_httpClient, request, response, completionOption, cancellationToken);
                 }
 
                 return response;
@@ -243,14 +230,14 @@ namespace Httwrap
 
                 foreach (IHttpInterceptor interceptor in _interceptors)
                 {
-                    interceptor.OnRequest(request);
+                    interceptor.OnRequest(_httpClient, request, completionOption, cancellationToken);
                 }
 
                 HttpResponseMessage response = await _httpClient.SendAsync(request, completionOption, cancellationToken);
 
                 foreach (IHttpInterceptor interceptor in _interceptors)
                 {
-                    interceptor.OnResponse(request, response);
+                    interceptor.OnResponse(_httpClient, request, response, completionOption, cancellationToken);
                 }
 
                 return response;

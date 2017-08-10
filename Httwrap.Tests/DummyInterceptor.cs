@@ -1,20 +1,19 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Threading;
 using Httwrap.Interception;
-using Httwrap.Interface;
 
 namespace Httwrap.Tests
 {
     public class DummyInterceptor : IHttpInterceptor
     {
-        private readonly IHttwrapClient _client;
-
-        public void OnRequest(HttpRequestMessage request)
+        public void OnRequest(HttpClient httpClient, HttpRequestMessage request, HttpCompletionOption completionOption,
+            CancellationToken cancellationToken)
         {
-            
         }
 
-        public void OnResponse(HttpRequestMessage request, HttpResponseMessage response)
+        public void OnResponse(HttpClient httpClient, HttpRequestMessage request, HttpResponseMessage response,
+            HttpCompletionOption completionOption, CancellationToken cancellationToken)
         {
             response.StatusCode = HttpStatusCode.Accepted;
         }
